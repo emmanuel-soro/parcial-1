@@ -1,0 +1,4 @@
+do-not-show-remove-module-warning=true
+eclipse.preferences.version=1
+host-names=localhost|*|Wildfly 9|*|
+show-on-activity=false

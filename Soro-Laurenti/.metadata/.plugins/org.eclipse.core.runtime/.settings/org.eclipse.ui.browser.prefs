@@ -1,0 +1,3 @@
+browsers=<?xml version\="1.0" encoding\="UTF-8"?>\n<web-browsers current\="0">\n<system/>\n<external location\="/usr/bin/firefox" name\="Firefox"/>\n<external location\="/usr/bin/google-chrome" name\="Chrome"/>\n</web-browsers>
+eclipse.preferences.version=1
+internalWebBrowserHistory=file\:///home/cx.ar/esoro/git/SingleSignOn/cas-server-webapp/src/main/webapp/images/ja-sig-logo.gif|*|file\:/home/cx.ar/esoro/git/SingleSignOn/cas-server-webapp/src/main/webapp/images/ja-sig-logo.gif|*|file\:///home/cx.ar/esoro/git/SingleSignOn/cas-server-webapp/src/main/webapp/images/favicon.ico|*|file\:/home/cx.ar/esoro/git/SingleSignOn/cas-server-webapp/src/main/webapp/images/favicon.ico|*|https\://www.pivotaltracker.com/story/show/142428219|*|
