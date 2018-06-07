@@ -18,5 +18,9 @@ public class Coincidencia {
 		return cantidadColaboradoresCoicidentes;
 	}
 
+	public void setCantidadColaboradoresCoicidentes(int cantidadColaboradoresCoicidentes) {
+		this.cantidadColaboradoresCoicidentes = cantidadColaboradoresCoicidentes;
+	}
+
 	
 }

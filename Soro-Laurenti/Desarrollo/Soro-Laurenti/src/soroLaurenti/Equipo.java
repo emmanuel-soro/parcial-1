@@ -21,8 +21,8 @@ public class Equipo {
 	private int cantRespuestas;
 	private List<Coincidencia> coincidencias;
 
-	private static final String PATH_ENTRADA = "../../Preparacion de prueba/Lote de Prueba/Entrada/";
-	private static final String PATH_SALIDA = "../../Ejecucion de prueba/Salida obtenida/";
+	private static final String PATH_ENTRADA = "./Soro-Laurenti/Preparacion de prueba/Lote de Prueba/Entrada/";
+	private static final String PATH_SALIDA = "./Soro-Laurenti/Ejecucion de prueba/Salida obtenida/";
 
 	public Equipo(String entrada, String salida) throws FileNotFoundException {
 		this.entrada = new File(PATH_ENTRADA + entrada);
@@ -43,7 +43,7 @@ public class Equipo {
 
 	private void ordenarColaboradores() {
 
-		List<Colaborador> list = Arrays.asList(colaboradores);
+		List<Colaborador> list = Arrays.asList(this.colaboradores);
 
 		list.sort(new Comparator<Colaborador>() {
 
@@ -59,6 +59,7 @@ public class Equipo {
 
 	public void resolver() {
 
+		this.ordenarColaboradores();
 		Colaborador colabActual = colaboradores[0];
 		char[] respActual = colabActual.getRespuestas().toCharArray();
 		Colaborador colabSiguiente;
@@ -66,39 +67,50 @@ public class Equipo {
 		String coinRtaActual = "";
 		int cantCoinActual = 1;
 		int indiceRespuestaActual = 0;
+		boolean saltar = false;
 
 		for (int i = 1; i < colaboradores.length; i++) {
 			colabSiguiente = colaboradores[i];
 			respSiguiente = colabSiguiente.getRespuestas().toCharArray();
 
-			for (int j = indiceRespuestaActual; j < cantRespuestas; j++) {
+			if (coinRtaActual.equals("")) {
 
-				if (respActual[j] == respSiguiente[j]) {
-					coinRtaActual += respActual[j];
-				} else {
-					// ver donde incrementar
-					cantCoinActual++;
-					indiceRespuestaActual = j;
-					break;
+				for (int j = indiceRespuestaActual; j < cantRespuestas; j++) {
+
+					if (respActual[j] == respSiguiente[j]) {
+						coinRtaActual += respActual[j];
+					} else {
+						// ver donde incrementar
+						cantCoinActual++;
+						this.coincidencias.add(new Coincidencia(coinRtaActual, cantCoinActual));
+						indiceRespuestaActual = j;
+						saltar = true;
+						break;
+					}
 				}
+
+				if (saltar) {
+					saltar = false;
+					continue;
+				}
+				
+				this.coincidencias.add(new Coincidencia(coinRtaActual, cantCoinActual));
 			}
 
-			if (i + 1 != colaboradores.length) {
-				Colaborador aux = colaboradores[i + 1];
-				String auxChars = aux.getRespuestas().substring(0, respActual.length);
+			Colaborador aux = colaboradores[i];
+			String auxChars = aux.getRespuestas().substring(0, respActual.length);
 
-				if (auxChars.equals(coinRtaActual)) {
-					cantCoinActual++;
-
-				} else {
-					coincidencias.add(new Coincidencia(coinRtaActual, cantCoinActual));
-					coinRtaActual = "";
-					cantCoinActual = 1;
-					indiceRespuestaActual = 0;
-				}
-				colabActual = colabSiguiente;
-				respActual = respSiguiente;
+			if (auxChars.startsWith(coinRtaActual)) {
+				Coincidencia c = this.coincidencias.get(this.coincidencias.size() - 1);
+				c.setCantidadColaboradoresCoicidentes(c.getCantidadColaboradoresCoicidentes() + 1);
+			} else {
+				this.coincidencias.add(new Coincidencia(coinRtaActual, cantCoinActual));
+				coinRtaActual = "";
+				cantCoinActual = 1;
+				indiceRespuestaActual = 0;
 			}
+			colabActual = colabSiguiente;
+			respActual = respSiguiente;
 
 		}
 
@@ -107,27 +119,29 @@ public class Equipo {
 			@Override
 			public int compare(Coincidencia o1, Coincidencia o2) {
 
-				return o2.getCantidadColaboradoresCoicidentes() > o1.getCantidadColaboradoresCoicidentes() ? 1
-						: o2.getCantidadColaboradoresCoicidentes() == o1.getCantidadColaboradoresCoicidentes() ? 0 : -1;
+				return ((int) Math.pow(o2.getRespuestas().length(), 2)
+						* o2.getCantidadColaboradoresCoicidentes()) > ((int) Math.pow(o1.getRespuestas().length(), 2)
+								* o1.getCantidadColaboradoresCoicidentes()) ? 1 : -1;
 
 			}
 		});
-		
-		
-		Coincidencia coin=  this.coincidencias.get(0);
-		
-		try(FileWriter fw = new FileWriter(this.salida); PrintWriter pw = new PrintWriter(fw)) {
-			
-			pw.println((int)Math.pow(coin.getRespuestas().length(), 2) * coin.getCantidadColaboradoresCoicidentes());
+
+		Coincidencia coin = null;
+
+		if (this.coincidencias.isEmpty()) {
+			coin = new Coincidencia("", 0);
+		} else {
+			coin = this.coincidencias.get(0);
+		}
+
+		try (FileWriter fw = new FileWriter(this.salida); PrintWriter pw = new PrintWriter(fw)) {
+
+			pw.println((int) Math.pow(coin.getRespuestas().length(), 2) * coin.getCantidadColaboradoresCoicidentes());
 			pw.println(coin.getRespuestas());
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
-		
-		
-		
-		
 
 	}
 
