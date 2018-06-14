@@ -81,9 +81,15 @@ public class Equipo {
 						coinRtaActual += respActual[j];
 					} else {
 						// ver donde incrementar
-						cantCoinActual++;
-						this.coincidencias.add(new Coincidencia(coinRtaActual, cantCoinActual));
-						indiceRespuestaActual = j;
+						
+						if(coinRtaActual == ""){
+							colabActual = colabSiguiente;
+							respActual = respSiguiente;
+						} else {
+							cantCoinActual++;
+							this.coincidencias.add(new Coincidencia(coinRtaActual, cantCoinActual));
+							indiceRespuestaActual = j;
+						}
 						saltar = true;
 						break;
 					}

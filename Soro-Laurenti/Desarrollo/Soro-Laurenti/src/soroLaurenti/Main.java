@@ -27,8 +27,35 @@ public class Main {
 
 		equipo = new Equipo("caso07.in", "caso07.out");
 		equipo.resolver();
-
+		
 		equipo = new Equipo("caso08.in", "caso08.out");
+		equipo.resolver();
+		
+		equipo = new Equipo("pelado/caso10.in", "caso10.out");
+		equipo.resolver();
+
+		equipo = new Equipo("pelado/caso11.in", "caso11.out");
+		equipo.resolver();
+
+		equipo = new Equipo("pelado/caso12.in", "caso12.out");
+		equipo.resolver();
+
+		equipo = new Equipo("pelado/caso13.in", "caso13.out");
+		equipo.resolver();
+
+		equipo = new Equipo("pelado/caso14.in", "caso14.out");
+		equipo.resolver();
+
+		equipo = new Equipo("pelado/caso15.in", "caso15.out");
+		equipo.resolver();
+
+		equipo = new Equipo("pelado/caso16.in", "caso16.out");
+		equipo.resolver();
+
+		equipo = new Equipo("pelado/caso17.in", "caso17.out");
+		equipo.resolver();
+
+		equipo = new Equipo("pelado/caso18.in", "caso18.out");
 		equipo.resolver();
 
 	}
